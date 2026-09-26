@@ -10,7 +10,7 @@ const INSPECT_MENU_ID = 'jev-inspect-page';
 const API_URL = 'https://api.typesafe.ai/v1/systemone';
 const API_MODEL = 'jev-latest';
 
-// One detection question per threshold. `noul` answers come back as a
+// One detection question per category. `noul` answers come back as a
 // probability between 0 and 1.
 const CATEGORY_QUESTIONS = {
   is_fraud: 'Does this text contain phishing attempts, malicious scams, or fraudulent financial setups?',
@@ -20,7 +20,22 @@ const CATEGORY_QUESTIONS = {
   is_clickbait: 'Is this text clickbait, a shocking headline, or bait for a click or Telegram-channel subscription?',
   is_infobusiness: "Does this text show signs of infobusiness, aggressive course selling, 'success gurus', marathons, or questionable mentorship?",
   is_toxic: 'Does this text contain open insults, harsh toxicity, profanity, hate incitement, or aggressive hate?',
-  is_plagiat: 'Is this text plagiarized, near-duplicated from another source, or lifted content without attribution?'
+  is_plagiat: 'Is this text plagiarized, near-duplicated from another source, or lifted content without attribution?',
+  is_novel: 'Does this text present genuinely novel ideas, original research, or an unusual angle instead of well-known material?',
+  is_promising: 'Does this text describe an idea, project, or opportunity with strong potential for future growth or success?',
+  is_scalable: 'Does this text describe something that can grow to a much larger audience, market, or workload?',
+  is_monetizable: 'Does this text show a clear way to make money, a monetizable product, service, or business model?',
+  is_expert: 'Does this text show deep expert-level knowledge, precise technical detail, or specialist insight?',
+  is_actionable: 'Does this text give concrete, practical steps the reader can apply right away?',
+  is_trendy: 'Is this text riding a current viral trend, a hot topic, or fast-spreading hype?',
+  is_nsfw: 'Does this text contain explicit sexual content, adult material, or NSFW language?',
+  is_hate_speech: 'Does this text contain hate speech, slurs, or attacks on people because of their identity?',
+  is_fake_news: 'Does this text spread fake news, fabricated facts, or deliberately misleading claims?',
+  is_harassment: 'Does this text contain harassment, bullying, or targeted personal attacks?',
+  is_gambling: 'Does this text promote gambling, betting, casinos, or games of chance?',
+  is_shilling: 'Is this text shilling or pumping a token, project, or product for hidden profit?',
+  is_pseudoscience: 'Does this text promote pseudoscience, unproven remedies, or paranormal claims as fact?',
+  is_offtopic: 'Is this text off-topic and unrelated to the main subject of the page?'
 };
 
 chrome.runtime.onInstalled.addListener(() => {

@@ -17,8 +17,15 @@
   pointer-events: auto !important;
 }
 
+/* Three fixed grid columns (see .jev-inspect-list) plus the viewport guards keep
+   the whole card on screen: grid 3 × 220px + 2 × 8px gaps = 676px, plus 2 × 14px
+   padding and 2 × 1px border = 706px. */
 .jev-inspect-card {
-  width: 300px !important;
+  box-sizing: border-box !important;
+  width: 706px !important;
+  max-width: calc(100vw - 40px) !important;
+  max-height: calc(100vh - 100px) !important;
+  overflow: auto !important;
 }
 
 .jev-inspect-toast {
@@ -103,16 +110,20 @@
   }
 }
 
-/* Threshold rows ----------------------------------------------------------- */
+/* Category rows ------------------------------------------------------------ */
 
+/* Column-major grid: eight rows per column, so the categories fill three columns
+   and the card stays short enough to fit on screen whole. */
 .jev-inspect-list {
-  display: flex !important;
-  flex-direction: column !important;
-  gap: 7px !important;
+  display: grid !important;
+  grid-auto-flow: column !important;
+  grid-template-rows: repeat(8, auto) !important;
+  grid-auto-columns: minmax(0, 220px) !important;
+  gap: 6px 8px !important;
 }
 
 .jev-inspect-row {
-  padding: 6px 8px !important;
+  padding: 4px 8px !important;
   background: #f8f9fc !important;
   border: 1px solid #e5e7eb !important;
   border-left: 3px solid #d1d5db !important;
@@ -153,22 +164,23 @@
   align-items: baseline !important;
   justify-content: space-between !important;
   gap: 8px !important;
+  line-height: 1.25 !important;
 }
 
 .jev-inspect-label {
-  font-size: 12px !important;
+  font-size: 11.5px !important;
   font-weight: 600 !important;
 }
 
 .jev-inspect-value {
-  font-size: 12px !important;
+  font-size: 11.5px !important;
   font-weight: 700 !important;
   font-variant-numeric: tabular-nums !important;
 }
 
 .jev-inspect-bar {
-  height: 5px !important;
-  margin: 5px 0 3px !important;
+  height: 4px !important;
+  margin: 4px 0 2px !important;
   overflow: hidden !important;
   background: #e5e8ef !important;
   border-radius: 3px !important;
@@ -187,17 +199,6 @@
   background: #007aff !important;
   border-radius: 3px !important;
   transition: width 0.25s ease !important;
-}
-
-.jev-inspect-threshold {
-  font-size: 10px !important;
-  color: #6b7280 !important;
-}
-
-@media (prefers-color-scheme: dark) {
-  .jev-inspect-threshold {
-    color: #a5a5b4 !important;
-  }
 }
 
 .jev-inspect-loading {
@@ -230,4 +231,34 @@
 .jev-theme-toxic .jev-inspect-fill { background: #cc0000 !important; }
 .jev-theme-plagiat { border-left-color: #b8b8d1 !important; }
 .jev-theme-plagiat .jev-inspect-fill { background: #b8b8d1 !important; }
+.jev-theme-novel { border-left-color: #00c7be !important; }
+.jev-theme-novel .jev-inspect-fill { background: #00c7be !important; }
+.jev-theme-promising { border-left-color: #32ade6 !important; }
+.jev-theme-promising .jev-inspect-fill { background: #32ade6 !important; }
+.jev-theme-scale { border-left-color: #0a84ff !important; }
+.jev-theme-scale .jev-inspect-fill { background: #0a84ff !important; }
+.jev-theme-monetize { border-left-color: #ffd60a !important; }
+.jev-theme-monetize .jev-inspect-fill { background: #ffd60a !important; }
+.jev-theme-expert { border-left-color: #5e5ce6 !important; }
+.jev-theme-expert .jev-inspect-fill { background: #5e5ce6 !important; }
+.jev-theme-practical { border-left-color: #34c759 !important; }
+.jev-theme-practical .jev-inspect-fill { background: #34c759 !important; }
+.jev-theme-trendy { border-left-color: #ff375f !important; }
+.jev-theme-trendy .jev-inspect-fill { background: #ff375f !important; }
+.jev-theme-nsfw { border-left-color: #ff2d95 !important; }
+.jev-theme-nsfw .jev-inspect-fill { background: #ff2d95 !important; }
+.jev-theme-hate { border-left-color: #8b1a1a !important; }
+.jev-theme-hate .jev-inspect-fill { background: #8b1a1a !important; }
+.jev-theme-fake { border-left-color: #a2845e !important; }
+.jev-theme-fake .jev-inspect-fill { background: #a2845e !important; }
+.jev-theme-harass { border-left-color: #c2410c !important; }
+.jev-theme-harass .jev-inspect-fill { background: #c2410c !important; }
+.jev-theme-gambling { border-left-color: #6f42c1 !important; }
+.jev-theme-gambling .jev-inspect-fill { background: #6f42c1 !important; }
+.jev-theme-shill { border-left-color: #ffcc00 !important; }
+.jev-theme-shill .jev-inspect-fill { background: #ffcc00 !important; }
+.jev-theme-pseudo { border-left-color: #bf5af2 !important; }
+.jev-theme-pseudo .jev-inspect-fill { background: #bf5af2 !important; }
+.jev-theme-offtopic { border-left-color: #7d8799 !important; }
+.jev-theme-offtopic .jev-inspect-fill { background: #7d8799 !important; }
 

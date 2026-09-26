@@ -3,7 +3,7 @@
 // The only feature of the extension: inspect the current page. The readable
 // text of the page is collected, sent to the Jev API through the background
 // service worker, and the answer is rendered as a floating card that shows one
-// percentage per configured detection threshold.
+// percentage per detection category.
 
 const MIN_CHAR_LENGTH = 30;
 const MAX_CHAR_LENGTH = 4000;
@@ -23,9 +23,11 @@ const TARGET_SELECTOR =
 const NOISE_SELECTOR =
   'nav, footer, header, script, style, noscript, form, .tm-page-sidebar, .tm-navbar';
 
-// Threshold per detection category; a category is flagged when its probability
-// is greater than or equal to the threshold configured in the popup.
-const DEFAULT_THRESHOLDS = {
+// Built-in threshold per detection category: a row is highlighted when its
+// probability reaches the constant below. Positive-value categories (novelty,
+// scalability, …) use a stricter 50% so only strongly valuable pages light up,
+// risk categories use 25%. Not user-configurable — it lives here only.
+const THRESHOLDS = {
   is_fraud: 0.5,
   is_advertising: 0.2,
   is_ai_generated: 0.25,
@@ -33,7 +35,22 @@ const DEFAULT_THRESHOLDS = {
   is_clickbait: 0.2,
   is_infobusiness: 0.25,
   is_toxic: 0.25,
-  is_plagiat: 0.25
+  is_plagiat: 0.25,
+  is_novel: 0.5,
+  is_promising: 0.5,
+  is_scalable: 0.5,
+  is_monetizable: 0.5,
+  is_expert: 0.5,
+  is_actionable: 0.5,
+  is_trendy: 0.5,
+  is_nsfw: 0.25,
+  is_hate_speech: 0.25,
+  is_fake_news: 0.25,
+  is_harassment: 0.25,
+  is_gambling: 0.25,
+  is_shilling: 0.25,
+  is_pseudoscience: 0.25,
+  is_offtopic: 0.25
 };
 
 // Row order inside the result card.
@@ -45,33 +62,26 @@ const CATEGORIES = [
   { flag: 'is_clickbait', label: '🪤 Clickbait', theme: 'jev-theme-clickbait' },
   { flag: 'is_infobusiness', label: '💎 Infobusiness', theme: 'jev-theme-infobiz' },
   { flag: 'is_toxic', label: '🤬 Toxicity', theme: 'jev-theme-toxic' },
-  { flag: 'is_plagiat', label: '📕 Plagiat', theme: 'jev-theme-plagiat' }
+  { flag: 'is_plagiat', label: '📕 Plagiat', theme: 'jev-theme-plagiat' },
+  { flag: 'is_novel', label: '✨ Novelty', theme: 'jev-theme-novel' },
+  { flag: 'is_promising', label: '🚀 Promising Potential', theme: 'jev-theme-promising' },
+  { flag: 'is_scalable', label: '🌐 Scalability', theme: 'jev-theme-scale' },
+  { flag: 'is_monetizable', label: '💰 Monetizable', theme: 'jev-theme-monetize' },
+  { flag: 'is_expert', label: '🎓 Expert Depth', theme: 'jev-theme-expert' },
+  { flag: 'is_actionable', label: '🛠️ Practical Value', theme: 'jev-theme-practical' },
+  { flag: 'is_trendy', label: '🔥 Viral / Trendy', theme: 'jev-theme-trendy' },
+  { flag: 'is_nsfw', label: '🔞 NSFW / Adult', theme: 'jev-theme-nsfw' },
+  { flag: 'is_hate_speech', label: '🗣️ Hate Speech', theme: 'jev-theme-hate' },
+  { flag: 'is_fake_news', label: '📰 Fake News', theme: 'jev-theme-fake' },
+  { flag: 'is_harassment', label: '🫵 Harassment / Bullying', theme: 'jev-theme-harass' },
+  { flag: 'is_gambling', label: '🎰 Gambling / Betting', theme: 'jev-theme-gambling' },
+  { flag: 'is_shilling', label: '🚀 Shilling / Crypto-Pump', theme: 'jev-theme-shill' },
+  { flag: 'is_pseudoscience', label: '🔮 Pseudoscience', theme: 'jev-theme-pseudo' },
+  { flag: 'is_offtopic', label: '📌 Off-topic', theme: 'jev-theme-offtopic' }
 ];
 
-let thresholds = { ...DEFAULT_THRESHOLDS };
 let card = null;
 let toastTimer = null;
-
-/** Keeps only known categories with a threshold inside (0, 1]. */
-function normalizeThresholds(stored) {
-  const normalized = { ...DEFAULT_THRESHOLDS };
-  if (!stored) return normalized;
-
-  for (const { flag } of CATEGORIES) {
-    const value = stored[flag];
-    if (typeof value === 'number' && value > 0 && value <= 1) normalized[flag] = value;
-  }
-  return normalized;
-}
-
-chrome.storage.local.get(['jevThresholds'], (result) => {
-  thresholds = normalizeThresholds(result.jevThresholds);
-});
-
-chrome.storage.onChanged.addListener((changes, areaName) => {
-  if (areaName !== 'local' || !changes.jevThresholds) return;
-  thresholds = normalizeThresholds(changes.jevThresholds.newValue);
-});
 
 chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
   if (request.action === 'inspectPage') {
@@ -93,7 +103,7 @@ function collectPageText() {
   return chunks.join(' ').slice(0, MAX_CHAR_LENGTH);
 }
 
-/** Inspects the page and renders one percentage row per threshold. */
+/** Inspects the page and renders one percentage row per category. */
 function inspectPage() {
   removeCard();
 
@@ -123,13 +133,10 @@ function inspectPage() {
     const results = response.results || {};
     card = createCard();
     for (const category of CATEGORIES) {
-      const threshold = thresholds[category.flag];
       const probability = getProbability(results[category.flag]);
 
-      card.list.appendChild(buildRow(category, probability, threshold));
-      card.lines.push(
-        `${category.label} ${formatPercent(probability)} (threshold ${Math.round(threshold * 100)}%)`
-      );
+      card.list.appendChild(buildRow(category, probability));
+      card.lines.push(`${category.label} ${formatPercent(probability)}`);
     }
     document.body.appendChild(card.element);
   });
@@ -209,8 +216,10 @@ function buildLoadingRow() {
   return row;
 }
 
-/** One threshold row: label, percentage, progress bar and the threshold value. */
-function buildRow(category, probability, threshold) {
+/** One category row: label, percentage and progress bar. */
+function buildRow(category, probability) {
+  const threshold = THRESHOLDS[category.flag];
+
   const row = document.createElement('div');
   row.className = `jev-inspect-row ${category.theme}`;
 
@@ -235,11 +244,7 @@ function buildRow(category, probability, threshold) {
   fill.style.width = probability === null ? '0%' : `${Math.round(clamp01(probability) * 100)}%`;
   bar.appendChild(fill);
 
-  const thresholdLine = document.createElement('div');
-  thresholdLine.className = 'jev-inspect-threshold';
-  thresholdLine.textContent = `threshold ${Math.round(threshold * 100)}%`;
-
-  row.append(head, bar, thresholdLine);
+  row.append(head, bar);
 
   if (probability !== null && probability >= threshold) row.classList.add('is-flagged');
   if (probability !== null && probability >= STRONG_MATCH) row.classList.add('is-critical');

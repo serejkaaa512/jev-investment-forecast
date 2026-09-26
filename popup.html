@@ -17,10 +17,6 @@
     label { display: block; margin: 0 0 2px; font-size: 10px; font-weight: 700; letter-spacing: .05em; text-transform: uppercase; color: var(--muted); }
     input[type="password"] { width: 100%; padding: 6px 9px; margin: 0 0 7px; font-family: inherit; font-size: 12px; color: var(--ink); background: #fbfcfe; border: 1px solid #dfe3ec; border-radius: 8px; transition: border-color .15s, box-shadow .15s, background .15s; }
     input[type="password"]:focus { outline: none; background: #fff; border-color: #9db8f8; box-shadow: 0 0 0 3px rgba(79, 124, 255, .14); }
-    .thresholds { display: grid; grid-template-columns: 1fr auto; gap: 2px 6px; align-items: center; margin: 0 0 9px; }
-    .thresholds label { margin: 0; font-size: 11px; font-weight: 500; letter-spacing: 0; text-transform: none; color: #4b5563; }
-    .thresholds input { width: 48px; padding: 2px 3px; margin: 0; font-family: inherit; font-size: 11.5px; text-align: center; color: var(--ink); background: #fbfcfe; border: 1px solid #dfe3ec; border-radius: 6px; }
-    .thresholds input:focus { outline: none; border-color: #9db8f8; box-shadow: 0 0 0 2px rgba(79, 124, 255, .14); }
     button { position: relative; width: 100%; padding: 8px 10px; margin-top: 2px; font-family: inherit; font-size: 12.5px; font-weight: 700; color: #fff; cursor: pointer; background: linear-gradient(135deg, var(--brand1) 0%, var(--brand2) 100%); border: none; border-radius: 9px; box-shadow: 0 2px 6px rgba(79, 124, 255, .28); transition: filter .15s, box-shadow .15s, transform .1s; }
     button:hover { filter: brightness(1.07); box-shadow: 0 4px 12px rgba(79, 124, 255, .34); }
     button:active { transform: translateY(1px); }
@@ -39,33 +35,12 @@
 <body>
   <header>
     <h3><span class="logo">🛡️</span>Jev Projects Review</h3>
-    <p>inspect a page · percentage per threshold</p>
+    <p>inspect a page · percentage per category</p>
   </header>
   <main>
     <section class="card">
       <label for="apiKey">TypeSafe Jev API token</label>
       <input type="password" id="apiKey" placeholder="jev_live_...">
-    </section>
-    <section class="card">
-      <label>Detection thresholds (%)</label>
-      <div class="thresholds">
-        <label for="th_is_fraud">⚠️ Fraud</label>
-        <input type="number" id="th_is_fraud" min="1" max="100" value="50">
-        <label for="th_is_advertising">📢 Advertising</label>
-        <input type="number" id="th_is_advertising" min="1" max="100" value="20">
-        <label for="th_is_ai_generated">🤖 AI generation</label>
-        <input type="number" id="th_is_ai_generated" min="1" max="100" value="25">
-        <label for="th_is_spam">🚫 Spam</label>
-        <input type="number" id="th_is_spam" min="1" max="100" value="25">
-        <label for="th_is_clickbait">🪤 Clickbait</label>
-        <input type="number" id="th_is_clickbait" min="1" max="100" value="20">
-        <label for="th_is_infobusiness">💎 Infobusiness</label>
-        <input type="number" id="th_is_infobusiness" min="1" max="100" value="25">
-        <label for="th_is_toxic">🤬 Toxicity</label>
-        <input type="number" id="th_is_toxic" min="1" max="100" value="25">
-        <label for="th_is_plagiat">📕 Plagiat</label>
-        <input type="number" id="th_is_plagiat" min="1" max="100" value="25">
-      </div>
     </section>
     <button id="inspectBtn" aria-label="Inspect the current page">🔍 Inspect this page</button>
     <button id="saveBtn" class="secondary" aria-label="Save settings">
