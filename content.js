@@ -160,7 +160,7 @@ function inspectPage() {
     }
 
     if (!response || response.error) {
-      showToast(response && response.error ? response.error : 'Page inspection failed.');
+      showToast(response && response.error ? response.error : 'Project investment forecast failed.');
       return;
     }
 
@@ -327,7 +327,7 @@ function createCard() {
 
   const title = document.createElement('span');
   title.className = 'jev-inspect-title';
-  title.textContent = '🔍 Page inspection (Jev)';
+  title.textContent = '🔍 Project investment forecast';
 
   const actions = document.createElement('div');
   actions.className = 'jev-inspect-actions';
