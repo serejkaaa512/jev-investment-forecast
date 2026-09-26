@@ -1,0 +1,233 @@
+/* Jev Projects Review — styles for the single "page inspection" result card.
+   The content script injects them on every page it runs in. */
+
+.jev-inspect-card,
+.jev-inspect-toast {
+  position: fixed !important;
+  z-index: 10003 !important;
+  padding: 12px 14px !important;
+  color: #1a1a1a !important;
+  background: #ffffff !important;
+  border: 1px solid #e2e4e8 !important;
+  border-radius: 12px !important;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15) !important;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif !important;
+  font-size: 13px !important;
+  line-height: 1.4 !important;
+  pointer-events: auto !important;
+}
+
+.jev-inspect-card {
+  width: 300px !important;
+}
+
+.jev-inspect-toast {
+  right: 20px !important;
+  bottom: 20px !important;
+  max-width: 300px !important;
+}
+
+@media (prefers-color-scheme: dark) {
+  .jev-inspect-card,
+  .jev-inspect-toast {
+    color: #f0f0f5 !important;
+    background: #1e1e24 !important;
+    border-color: #383842 !important;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4) !important;
+  }
+}
+
+/* Header ------------------------------------------------------------------- */
+
+.jev-inspect-header {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  gap: 8px !important;
+  margin-bottom: 8px !important;
+  padding-bottom: 6px !important;
+  border-bottom: 1px solid #eaeaea !important;
+}
+
+@media (prefers-color-scheme: dark) {
+  .jev-inspect-header {
+    border-bottom-color: #2e2e38 !important;
+  }
+}
+
+.jev-inspect-title {
+  font-size: 13px !important;
+  font-weight: 600 !important;
+}
+
+.jev-inspect-actions {
+  display: flex !important;
+  align-items: center !important;
+  gap: 6px !important;
+}
+
+.jev-inspect-copy {
+  padding: 2px 7px !important;
+  font-family: inherit !important;
+  font-size: 11px !important;
+  font-weight: 600 !important;
+  color: #007aff !important;
+  background: transparent !important;
+  border: 1px solid #cfe0ff !important;
+  border-radius: 6px !important;
+  cursor: pointer !important;
+}
+
+.jev-inspect-copy:hover {
+  background: #eef4ff !important;
+}
+
+.jev-inspect-close {
+  padding: 0 2px !important;
+  font-family: inherit !important;
+  font-size: 15px !important;
+  line-height: 1 !important;
+  color: #8a8a94 !important;
+  background: transparent !important;
+  border: none !important;
+  cursor: pointer !important;
+}
+
+.jev-inspect-close:hover {
+  color: #1a1a1a !important;
+}
+
+@media (prefers-color-scheme: dark) {
+  .jev-inspect-close:hover {
+    color: #f0f0f5 !important;
+  }
+}
+
+/* Threshold rows ----------------------------------------------------------- */
+
+.jev-inspect-list {
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 7px !important;
+}
+
+.jev-inspect-row {
+  padding: 6px 8px !important;
+  background: #f8f9fc !important;
+  border: 1px solid #e5e7eb !important;
+  border-left: 3px solid #d1d5db !important;
+  border-radius: 8px !important;
+}
+
+@media (prefers-color-scheme: dark) {
+  .jev-inspect-row {
+    background: #26262f !important;
+    border-color: #3d3d4b !important;
+  }
+}
+
+.jev-inspect-row.is-flagged {
+  background: #eef2fb !important;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.12) !important;
+}
+
+.jev-inspect-row.is-critical {
+  background: #e2e8f8 !important;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.18) !important;
+}
+
+@media (prefers-color-scheme: dark) {
+  .jev-inspect-row.is-flagged {
+    background: #333a4c !important;
+  }
+
+  .jev-inspect-row.is-critical {
+    background: #3f4763 !important;
+  }
+}
+
+/* Row content -------------------------------------------------------------- */
+
+.jev-inspect-row-head {
+  display: flex !important;
+  align-items: baseline !important;
+  justify-content: space-between !important;
+  gap: 8px !important;
+}
+
+.jev-inspect-label {
+  font-size: 12px !important;
+  font-weight: 600 !important;
+}
+
+.jev-inspect-value {
+  font-size: 12px !important;
+  font-weight: 700 !important;
+  font-variant-numeric: tabular-nums !important;
+}
+
+.jev-inspect-bar {
+  height: 5px !important;
+  margin: 5px 0 3px !important;
+  overflow: hidden !important;
+  background: #e5e8ef !important;
+  border-radius: 3px !important;
+}
+
+@media (prefers-color-scheme: dark) {
+  .jev-inspect-bar {
+    background: #3a3a46 !important;
+  }
+}
+
+.jev-inspect-fill {
+  display: block !important;
+  width: 0;
+  height: 100% !important;
+  background: #007aff !important;
+  border-radius: 3px !important;
+  transition: width 0.25s ease !important;
+}
+
+.jev-inspect-threshold {
+  font-size: 10px !important;
+  color: #6b7280 !important;
+}
+
+@media (prefers-color-scheme: dark) {
+  .jev-inspect-threshold {
+    color: #a5a5b4 !important;
+  }
+}
+
+.jev-inspect-loading {
+  font-weight: 500 !important;
+  color: #007aff !important;
+}
+
+/* Off-screen helper used only by the clipboard fallback. */
+.jev-inspect-clipboard {
+  position: fixed !important;
+  top: -1000px !important;
+  left: -1000px !important;
+  opacity: 0 !important;
+}
+
+/* Per-category accents: row border and progress bar. */
+.jev-theme-fraud { border-left-color: #ff3b30 !important; }
+.jev-theme-fraud .jev-inspect-fill { background: #ff3b30 !important; }
+.jev-theme-ad { border-left-color: #ff9500 !important; }
+.jev-theme-ad .jev-inspect-fill { background: #ff9500 !important; }
+.jev-theme-ai { border-left-color: #5856d6 !important; }
+.jev-theme-ai .jev-inspect-fill { background: #5856d6 !important; }
+.jev-theme-spam { border-left-color: #8e8e93 !important; }
+.jev-theme-spam .jev-inspect-fill { background: #8e8e93 !important; }
+.jev-theme-clickbait { border-left-color: #007aff !important; }
+.jev-theme-clickbait .jev-inspect-fill { background: #007aff !important; }
+.jev-theme-infobiz { border-left-color: #af52de !important; }
+.jev-theme-infobiz .jev-inspect-fill { background: #af52de !important; }
+.jev-theme-toxic { border-left-color: #cc0000 !important; }
+.jev-theme-toxic .jev-inspect-fill { background: #cc0000 !important; }
+.jev-theme-plagiat { border-left-color: #b8b8d1 !important; }
+.jev-theme-plagiat .jev-inspect-fill { background: #b8b8d1 !important; }
+

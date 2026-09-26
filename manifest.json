@@ -1,0 +1,29 @@
+{
+  "manifest_version": 3,
+  "name": "Jev Projects Review",
+  "version": "1.0",
+  "description": "Inspects the current page with TypeSafe Jev AI and shows a percentage score for every detection threshold (fraud, ads, AI slop, spam, clickbait, infobusiness, toxicity, plagiarism).",
+  "permissions": [
+    "storage",
+    "activeTab",
+    "contextMenus"
+  ],
+  "host_permissions": [
+    "https://api.typesafe.ai/*"
+  ],
+  "action": {
+    "default_popup": "popup.html",
+    "default_title": "Jev Projects Review"
+  },
+  "background": {
+    "service_worker": "background.js"
+  },
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "css": ["styles.css"],
+      "js": ["content.js"]
+    }
+  ]
+}
+
