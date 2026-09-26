@@ -2,7 +2,7 @@
   "manifest_version": 3,
   "name": "Jev Investment Forecast",
   "version": "1.0",
-  "description": "Inspects the current page with TypeSafe Jev AI and forecasts its investment potential with a percentage score for every category (fraud, ads, spam…).",
+  "description": "Inspects the current page with TypeSafe Jev AI and forecasts its investment potential.",
   "permissions": [
     "storage",
     "activeTab",
