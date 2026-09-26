@@ -91,6 +91,32 @@ const CATEGORIES = [
 let card = null;
 let toastTimer = null;
 
+// Display metadata for the choice-type questions shown in a separate block.
+// `key` is the criteria key sent by background.js; `label` is the human text
+// shown on screen for that option.
+const CHOICE_DISPLAY = [
+  {
+    flag: 'investment_amount',
+    label: '💵 Recommended Investment',
+    options: [
+      { key: '1k dollars', label: '1k dollars' },
+      { key: '10k dollars', label: '10k dollars' },
+      { key: '100k dollars', label: '100k dollars' },
+      { key: '1m dollars', label: '1m dollars' }
+    ]
+  },
+  {
+    flag: 'investment_duration',
+    label: '⏳ Recommended Timeframe',
+    options: [
+      { key: '1m', label: '1 month' },
+      { key: '1y', label: '1 year' },
+      { key: '3y', label: '3 years' },
+      { key: '10y', label: '10 years' }
+    ]
+  }
+];
+
 chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
   if (request.action === 'inspectPage') {
     inspectPage();
@@ -146,6 +172,22 @@ function inspectPage() {
       card.list.appendChild(buildRow(category, probability));
       card.lines.push(`${category.label} ${formatPercent(probability)}`);
     }
+
+    // Append the choice-results block below the category list.
+    const choiceBlock = createChoiceBlock(results);
+    card.element.appendChild(choiceBlock);
+
+    for (const item of CHOICE_DISPLAY) {
+      const answer = results[item.flag];
+      const chosen = getChoiceAnswer(answer);
+      const probabilities = getChoiceProbabilities(answer);
+
+      card.lines.push(`${item.label} ${chosen ? getChoiceLabel(item, chosen) : '—'}`);
+      for (const option of item.options) {
+        card.lines.push(`  ${option.label} ${formatPercent(probabilities[option.key] ?? null)}`);
+      }
+    }
+
     document.body.appendChild(card.element);
   });
 }
@@ -170,6 +212,107 @@ function clamp01(value) {
 
 function formatPercent(probability) {
   return probability === null ? '—' : `${Math.round(probability * 100)}%`;
+}
+
+/** Extracts the chosen criteria key from a Jev choice-type API response. */
+function getChoiceAnswer(answer) {
+  if (answer === undefined || answer === null) return null;
+  if (typeof answer === 'string') return answer;
+  if (typeof answer === 'object') {
+    return answer.choice ?? answer.selected ?? answer.value ?? answer.answer ?? null;
+  }
+  return String(answer);
+}
+
+/** Every option probability of a choice-type answer, keyed by criteria key. */
+function getChoiceProbabilities(answer) {
+  if (!answer || typeof answer !== 'object' || !answer.probabilities) return {};
+  return answer.probabilities;
+}
+
+/** Human label for a criteria key of a displayed choice question. */
+function getChoiceLabel(item, key) {
+  const option = item.options.find((entry) => entry.key === key);
+  return option ? option.label : key;
+}
+
+/** Builds the investment-recommendation block shown below the category list. */
+function createChoiceBlock(results) {
+  const block = document.createElement('div');
+  block.className = 'jev-choice-block';
+
+  const header = document.createElement('div');
+  header.className = 'jev-choice-header';
+  header.textContent = '📊 Investment Recommendation';
+  block.appendChild(header);
+
+  const list = document.createElement('div');
+  list.className = 'jev-choice-list';
+
+  for (const item of CHOICE_DISPLAY) {
+    const answer = results[item.flag];
+    const chosen = getChoiceAnswer(answer);
+    const probabilities = getChoiceProbabilities(answer);
+
+    const row = document.createElement('div');
+    row.className = 'jev-choice-row';
+
+    const head = document.createElement('div');
+    head.className = 'jev-choice-row-head';
+
+    const label = document.createElement('span');
+    label.className = 'jev-choice-label';
+    label.textContent = item.label;
+
+    const value = document.createElement('span');
+    value.className = 'jev-choice-value';
+    value.textContent = chosen ? getChoiceLabel(item, chosen) : '—';
+
+    head.append(label, value);
+    row.appendChild(head);
+
+    // One line per option: label, probability and a bar; the chosen one is highlighted.
+    const options = document.createElement('div');
+    options.className = 'jev-choice-options';
+
+    for (const option of item.options) {
+      const probability = probabilities[option.key] ?? null;
+
+      const optionRow = document.createElement('div');
+      optionRow.className = 'jev-choice-option';
+      if (chosen && option.key === chosen) optionRow.classList.add('is-selected');
+
+      const optionHead = document.createElement('div');
+      optionHead.className = 'jev-choice-option-head';
+
+      const optionLabel = document.createElement('span');
+      optionLabel.className = 'jev-choice-option-label';
+      optionLabel.textContent = option.label;
+
+      const optionValue = document.createElement('span');
+      optionValue.className = 'jev-choice-option-value';
+      optionValue.textContent = formatPercent(probability);
+
+      optionHead.append(optionLabel, optionValue);
+
+      const bar = document.createElement('div');
+      bar.className = 'jev-inspect-bar';
+
+      const fill = document.createElement('span');
+      fill.className = 'jev-inspect-fill';
+      fill.style.width = probability === null ? '0%' : `${Math.round(clamp01(probability) * 100)}%`;
+      bar.appendChild(fill);
+
+      optionRow.append(optionHead, bar);
+      options.appendChild(optionRow);
+    }
+
+    row.appendChild(options);
+    list.appendChild(row);
+  }
+
+  block.appendChild(list);
+  return block;
 }
 
 /** Floating card skeleton: header, actions and the row list. */

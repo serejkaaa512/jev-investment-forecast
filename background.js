@@ -10,6 +10,29 @@ const INSPECT_MENU_ID = 'jev-inspect-page';
 const API_URL = 'https://api.typesafe.ai/v1/systemone';
 const API_MODEL = 'jev-latest';
 
+// Choice-type questions: the response carries `choice` (the selected criteria
+// key) plus `probabilities` for every key of the criteria map.
+const CHOICE_QUESTIONS = {
+  investment_amount: {
+    instructions: 'How much money is good to invest in this project?',
+    criteria:  {
+      "1k dollars": '1000 dollars',
+      "10k dollars": '10000 dollars',
+      "100k dollars": '100000 dollars',
+      "1m dollars": '1000000 dollars'
+    }
+  },
+  investment_duration: {
+    instructions: 'For how much time is it good to invest in this project?',
+    criteria:  {
+      "1m": '1 month',
+      "1y": '1 year',
+      "3y": '3 years',
+      "10y": '10 years'
+    }
+  }
+};
+
 // One detection question per category. `noul` answers come back as a
 // probability between 0 and 1.
 const CATEGORY_QUESTIONS = {
@@ -107,6 +130,9 @@ async function analyzePage(pageText) {
   const questions = {};
   for (const [flag, instructions] of Object.entries(CATEGORY_QUESTIONS)) {
     questions[flag] = { type: 'noul', instructions };
+  }
+  for (const [flag, def] of Object.entries(CHOICE_QUESTIONS)) {
+    questions[flag] = { type: 'choice', instructions: def.instructions, criteria: def.criteria };
   }
 
   const response = await fetch(API_URL, {
