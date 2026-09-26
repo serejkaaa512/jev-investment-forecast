@@ -28,6 +28,7 @@
     button.saved .btn-label { opacity: 0; }
     button.saved .btn-check { opacity: 1; transform: scale(1); }
     .footnote { min-height: 41px; margin: 0; padding: 6px 9px; font-size: 10px; line-height: 1.35; color: #6b7280; background: #f1f4fb; border: 1px solid #e3e9f7; border-radius: 10px; transition: background .18s ease, border-color .18s ease, color .18s ease; }
+    .footnote:empty { display: none; }
     .footnote b { color: #4b5563; }
     .footnote.error { color: #b91c1c; background: #fef2f2; border-color: #fecaca; }
   </style>
@@ -42,12 +43,12 @@
       <label for="apiKey">TypeSafe Jev API token</label>
       <input type="password" id="apiKey" placeholder="jev_live_...">
     </section>
-    <button id="inspectBtn" aria-label="Inspect the current page">🔍 Inspect this page</button>
     <button id="saveBtn" class="secondary" aria-label="Save settings">
       <span class="btn-label">Save settings</span>
       <span class="btn-check" aria-hidden="true">✓</span>
     </button>
-    <p class="footnote" id="footnote"><b>Tip:</b> press “Inspect this page” — or use the right-click menu item “Jev: inspect page” — to draw the percentage card on the page.</p>
+    <button id="inspectBtn" aria-label="Inspect the current page">🔍 Inspect this page</button>
+    <p class="footnote" id="footnote"></p>
   </main>
   <script src="popup.js"></script>
 </body>
