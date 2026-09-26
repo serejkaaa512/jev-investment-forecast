@@ -112,12 +112,12 @@
 
 /* Category rows ------------------------------------------------------------ */
 
-/* Column-major grid: eight rows per column, so the categories fill three columns
+/* Column-major grid: nine rows per column, so the categories fill three columns
    and the card stays short enough to fit on screen whole. */
 .jev-inspect-list {
   display: grid !important;
   grid-auto-flow: column !important;
-  grid-template-rows: repeat(8, auto) !important;
+  grid-template-rows: repeat(9, auto) !important;
   grid-auto-columns: minmax(0, 220px) !important;
   gap: 6px 8px !important;
 }
@@ -251,8 +251,6 @@
 .jev-theme-hate .jev-inspect-fill { background: #8b1a1a !important; }
 .jev-theme-fake { border-left-color: #a2845e !important; }
 .jev-theme-fake .jev-inspect-fill { background: #a2845e !important; }
-.jev-theme-harass { border-left-color: #c2410c !important; }
-.jev-theme-harass .jev-inspect-fill { background: #c2410c !important; }
 .jev-theme-gambling { border-left-color: #6f42c1 !important; }
 .jev-theme-gambling .jev-inspect-fill { background: #6f42c1 !important; }
 .jev-theme-shill { border-left-color: #ffcc00 !important; }
@@ -261,4 +259,14 @@
 .jev-theme-pseudo .jev-inspect-fill { background: #bf5af2 !important; }
 .jev-theme-offtopic { border-left-color: #7d8799 !important; }
 .jev-theme-offtopic .jev-inspect-fill { background: #7d8799 !important; }
+.jev-theme-feasible { border-left-color: #32d74b !important; }
+.jev-theme-feasible .jev-inspect-fill { background: #32d74b !important; }
+.jev-theme-risk { border-left-color: #d70015 !important; }
+.jev-theme-risk .jev-inspect-fill { background: #d70015 !important; }
+.jev-theme-ethical { border-left-color: #00966e !important; }
+.jev-theme-ethical .jev-inspect-fill { background: #00966e !important; }
+.jev-theme-design { border-left-color: #ff5d8f !important; }
+.jev-theme-design .jev-inspect-fill { background: #ff5d8f !important; }
+.jev-theme-clear { border-left-color: #64d2ff !important; }
+.jev-theme-clear .jev-inspect-fill { background: #64d2ff !important; }
 

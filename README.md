@@ -28,22 +28,27 @@ category:
 | 🔞 NSFW / Adult | 25% |
 | 🗣️ Hate Speech | 25% |
 | 📰 Fake News | 25% |
-| 🫵 Harassment / Bullying | 25% |
 | 🎰 Gambling / Betting | 25% |
 | 🚀 Shilling / Crypto-Pump | 25% |
 | 🔮 Pseudoscience | 25% |
 | 📌 Off-topic | 25% |
+| 🛠️ Feasible | 50% |
+| 💣 High Risk | 25% |
+| 🌱 Sustainable | 50% |
+| 🎨 High Quality UI/UX | 50% |
+| 🎯 Clear & Concise | 50% |
 
 The highlight thresholds are built into `content.js` (`THRESHOLDS`): the positive-value rows
-(Novelty … Viral / Trendy) use a stricter 50% so only strongly valuable pages light up, while the
-risk rows use 25%. They are constants now, not settings.
+(Novelty … Viral / Trendy, plus Feasible, Sustainable, High Quality UI/UX and Clear & Concise) use a
+stricter 50% so only strongly valuable pages light up, while the risk rows use 25%. They are constants
+now, not settings.
 
 Every row shows the percentage returned by the API and a progress bar — the threshold itself is not drawn
 on the card. A row is highlighted when its percentage reaches the built-in threshold for that category
 (highlighted more strongly from 80% up). The card can be copied to the clipboard with **Copy**
 (one `label percentage` line per category) or closed with **×**.
 
-The 23 rows are laid out in three columns of eight rows, so the whole card stays about 380 px tall and
+The 27 rows are laid out in three columns of nine rows, so the whole card stays about 420 px tall and
 fits on screen without scrolling. Only in an unusually short window is the card capped to the viewport
 height and scrolled internally.
 
@@ -71,11 +76,12 @@ described above, so the popup only holds the token.
    `TARGET_SELECTOR` (`p`, `article`, `section`, `li`, …), skipping anything inside
    `NOISE_SELECTOR` (`nav`, `footer`, `header`, `form`, …), blocks shorter than 30 characters and
    everything past 4 000 characters.
-3. The text is POSTed to the Jev API as one `state` with twenty-three `noul` questions
+3. The text is POSTed to the Jev API as one `state` with twenty-seven `noul` questions
    (`is_fraud`, `is_advertising`, `is_ai_generated`, `is_spam`, `is_clickbait`, `is_infobusiness`,
    `is_toxic`, `is_plagiat`, `is_novel`, `is_promising`, `is_scalable`, `is_monetizable`,
    `is_expert`, `is_actionable`, `is_trendy`, `is_nsfw`, `is_hate_speech`, `is_fake_news`,
-   `is_harassment`, `is_gambling`, `is_shilling`, `is_pseudoscience`, `is_offtopic`).
+   `is_gambling`, `is_shilling`, `is_pseudoscience`, `is_offtopic`, `is_feasible`, `is_high_risk`,
+   `is_ethical`, `is_well_designed`, `is_clear`).
 4. `content.js` turns every answer into a probability (0–1), compares it with the built-in threshold
    for that category and renders the percentage card.
 

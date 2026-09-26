@@ -31,11 +31,15 @@ const CATEGORY_QUESTIONS = {
   is_nsfw: 'Does this text contain explicit sexual content, adult material, or NSFW language?',
   is_hate_speech: 'Does this text contain hate speech, slurs, or attacks on people because of their identity?',
   is_fake_news: 'Does this text spread fake news, fabricated facts, or deliberately misleading claims?',
-  is_harassment: 'Does this text contain harassment, bullying, or targeted personal attacks?',
   is_gambling: 'Does this text promote gambling, betting, casinos, or games of chance?',
   is_shilling: 'Is this text shilling or pumping a token, project, or product for hidden profit?',
   is_pseudoscience: 'Does this text promote pseudoscience, unproven remedies, or paranormal claims as fact?',
-  is_offtopic: 'Is this text off-topic and unrelated to the main subject of the page?'
+  is_offtopic: 'Is this text off-topic and unrelated to the main subject of the page?',
+  is_feasible: 'Does this text describe an idea or project that is technically feasible and realistically achievable?',
+  is_high_risk: 'Does this text involve high risk, such as financial loss, legal trouble, safety hazards, or very uncertain outcomes?',
+  is_ethical: 'Does this text promote sustainability, environmental responsibility, or ethical business practices?',
+  is_well_designed: 'Does this text describe a product or interface with thoughtful, high-quality UI/UX design?',
+  is_clear: 'Is this text clear and concise, with a direct message and no unnecessary filler?'
 };
 
 chrome.runtime.onInstalled.addListener(() => {

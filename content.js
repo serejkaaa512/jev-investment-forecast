@@ -46,11 +46,15 @@ const THRESHOLDS = {
   is_nsfw: 0.25,
   is_hate_speech: 0.25,
   is_fake_news: 0.25,
-  is_harassment: 0.25,
   is_gambling: 0.25,
   is_shilling: 0.25,
   is_pseudoscience: 0.25,
-  is_offtopic: 0.25
+  is_offtopic: 0.25,
+  is_feasible: 0.5,
+  is_high_risk: 0.25,
+  is_ethical: 0.5,
+  is_well_designed: 0.5,
+  is_clear: 0.5
 };
 
 // Row order inside the result card.
@@ -73,11 +77,15 @@ const CATEGORIES = [
   { flag: 'is_nsfw', label: '🔞 NSFW / Adult', theme: 'jev-theme-nsfw' },
   { flag: 'is_hate_speech', label: '🗣️ Hate Speech', theme: 'jev-theme-hate' },
   { flag: 'is_fake_news', label: '📰 Fake News', theme: 'jev-theme-fake' },
-  { flag: 'is_harassment', label: '🫵 Harassment / Bullying', theme: 'jev-theme-harass' },
   { flag: 'is_gambling', label: '🎰 Gambling / Betting', theme: 'jev-theme-gambling' },
   { flag: 'is_shilling', label: '🚀 Shilling / Crypto-Pump', theme: 'jev-theme-shill' },
   { flag: 'is_pseudoscience', label: '🔮 Pseudoscience', theme: 'jev-theme-pseudo' },
-  { flag: 'is_offtopic', label: '📌 Off-topic', theme: 'jev-theme-offtopic' }
+  { flag: 'is_offtopic', label: '📌 Off-topic', theme: 'jev-theme-offtopic' },
+  { flag: 'is_feasible', label: '🛠️ Feasible', theme: 'jev-theme-feasible' },
+  { flag: 'is_high_risk', label: '💣 High Risk', theme: 'jev-theme-risk' },
+  { flag: 'is_ethical', label: '🌱 Sustainable', theme: 'jev-theme-ethical' },
+  { flag: 'is_well_designed', label: '🎨 High Quality UI/UX', theme: 'jev-theme-design' },
+  { flag: 'is_clear', label: '🎯 Clear & Concise', theme: 'jev-theme-clear' }
 ];
 
 let card = null;
