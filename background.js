@@ -57,7 +57,7 @@ const CATEGORY_QUESTIONS = {
   is_gambling: 'Does this text promote gambling, betting, casinos, or games of chance?',
   is_shilling: 'Is this text shilling or pumping a token, project, or product for hidden profit?',
   is_pseudoscience: 'Does this text promote pseudoscience, unproven remedies, or paranormal claims as fact?',
-  is_offtopic: 'Is this text off-topic and unrelated to the main subject of the page?',
+  is_authority: 'Does this text show the credibility, industry influence, and trust a founder builds to attract investors, top talent, and early adopters?',
   is_feasible: 'Does this text describe an idea or project that is technically feasible and realistically achievable?',
   is_high_risk: 'Does this text involve high risk, such as financial loss, legal trouble, safety hazards, or very uncertain outcomes?',
   is_ethical: 'Does this text promote sustainability, environmental responsibility, or ethical business practices?',

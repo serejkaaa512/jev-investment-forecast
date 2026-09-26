@@ -31,7 +31,7 @@ category:
 | 🎰 Gambling / Betting | 25% |
 | 🚀 Shilling / Crypto-Pump | 25% |
 | 🔮 Pseudoscience | 25% |
-| 📌 Off-topic | 25% |
+| 👑 Authority | 50% |
 | 🛠️ Feasible | 50% |
 | 💣 High Risk | 25% |
 | 🌱 Sustainable | 50% |
@@ -39,9 +39,9 @@ category:
 | 🎯 Clear & Concise | 50% |
 
 The highlight thresholds are built into `content.js` (`THRESHOLDS`): the positive-value rows
-(Novelty … Viral / Trendy, plus Feasible, Sustainable, High Quality UI/UX and Clear & Concise) use a
-stricter 50% so only strongly valuable pages light up, while the risk rows use 25%. They are constants
-now, not settings.
+(Novelty … Viral / Trendy, plus Authority, Feasible, Sustainable, High Quality UI/UX and Clear & Concise)
+use a stricter 50% so only strongly valuable pages light up, while the risk rows use 25%. They are
+constants now, not settings.
 
 Every row shows the percentage returned by the API and a progress bar — the threshold itself is not drawn
 on the card. A row is highlighted when its percentage reaches the built-in threshold for that category
@@ -80,7 +80,7 @@ described above, so the popup only holds the token.
    (`is_fraud`, `is_advertising`, `is_ai_generated`, `is_spam`, `is_clickbait`, `is_infobusiness`,
    `is_toxic`, `is_plagiat`, `is_novel`, `is_promising`, `is_scalable`, `is_monetizable`,
    `is_expert`, `is_actionable`, `is_trendy`, `is_nsfw`, `is_hate_speech`, `is_fake_news`,
-   `is_gambling`, `is_shilling`, `is_pseudoscience`, `is_offtopic`, `is_feasible`, `is_high_risk`,
+   `is_gambling`, `is_shilling`, `is_pseudoscience`, `is_authority`, `is_feasible`, `is_high_risk`,
    `is_ethical`, `is_well_designed`, `is_clear`).
 4. `content.js` turns every answer into a probability (0–1), compares it with the built-in threshold
    for that category and renders the percentage card.
