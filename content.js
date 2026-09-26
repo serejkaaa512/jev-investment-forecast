@@ -1,4 +1,4 @@
-// Jev Projects Review — content script.
+// Jev Investment Forecast — content script.
 //
 // The only feature of the extension: inspect the current page. The readable
 // text of the page is collected, sent to the Jev API through the background

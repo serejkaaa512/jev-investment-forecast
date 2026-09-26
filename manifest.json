@@ -1,8 +1,8 @@
 {
   "manifest_version": 3,
-  "name": "Jev Projects Review",
+  "name": "Jev Investment Forecast",
   "version": "1.0",
-  "description": "Inspects the current page with TypeSafe Jev AI and shows a percentage score for every detection category (fraud, ads, spam…).",
+  "description": "Inspects the current page with TypeSafe Jev AI and forecasts its investment potential with a percentage score for every category (fraud, ads, spam…).",
   "permissions": [
     "storage",
     "activeTab",
@@ -13,7 +13,7 @@
   ],
   "action": {
     "default_popup": "popup.html",
-    "default_title": "Jev Projects Review"
+    "default_title": "Jev Investment Forecast"
   },
   "background": {
     "service_worker": "background.js"

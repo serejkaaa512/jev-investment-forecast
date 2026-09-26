@@ -1,4 +1,4 @@
-// Jev Projects Review — background service worker.
+// Jev Investment Forecast — background service worker.
 //
 // The extension has a single feature: inspect a page. When the user asks for it
 // (context menu item or the popup button) the content script of the tab is told

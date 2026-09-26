@@ -1,7 +1,7 @@
-# Jev Projects Review
+# Jev Investment Forecast
 
-A Chrome extension (Manifest V3) with a single job: **inspect the page you are on and show a
-percentage score for every detection category**, powered by the TypeSafe Jev API
+A Chrome extension (Manifest V3) with a single job: **inspect the page you are on and forecast its
+investment potential with a percentage score for every category**, powered by the TypeSafe Jev API
 (`https://api.typesafe.ai/v1/systemone`).
 
 Right-click anywhere on a page and choose **“Jev: inspect page”**, or open the extension popup and
